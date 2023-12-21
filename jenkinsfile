@@ -20,7 +20,8 @@ sh('npm install')
 
 stage('Unit Test') {
 
-steps{script {
+steps{
+    script {
 
 sh('npm test')
 
@@ -48,10 +49,18 @@ sh('npm run build-dev')
 
 
 stage('SonarQube Analysis') {
-    def scannerHome = tool 'sonar';
+
+    steps {
+
+        script{
+
+def scannerHome = tool 'sonar';
     withSonarQubeEnv() {
       sh "${scannerHome}/bin/sonar-scanner"
     }
+        }
+    }
+    
   }
 
 }
